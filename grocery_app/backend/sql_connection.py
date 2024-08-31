@@ -1,9 +1,15 @@
 import mysql.connector
-__cnx=None
+import os
+
+__cnx = None
 
 def get_sql_connection():
     global __cnx
-    __cnx=mysql.connector.connect(
-        user="root", host="localhost",password="1234",database="gs"
-    )
+    if __cnx is None:
+        __cnx = mysql.connector.connect(
+            user=os.getenv('DB_USER'),
+            password=os.getenv('DB_PASSWORD'),
+            host=os.getenv('DB_HOST'),
+            database=os.getenv('DB_NAME')
+        )
     return __cnx
